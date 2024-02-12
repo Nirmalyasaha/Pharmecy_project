@@ -10,6 +10,9 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { useSelector } from "react-redux"
 import { redirect } from 'next/navigation'
 import { setCookieClient } from "@/lib/util.lib"
+import { Box } from "@mui/material"
+import { Router, useRouter } from "next/router"
+
 
 
 
@@ -31,6 +34,8 @@ export default function App() {
 
     const dispatch = useappDisPatch()
 
+    const router=useRouter()
+
     const onSubmit = (data: Inputs) => {
         LogData(data)?.then((response) => {
             const data = response?.data
@@ -40,6 +45,7 @@ export default function App() {
                 }))
                 //login success
                 setCookieClient("accessToken", data?.data?.access);
+                router.push("/branchdetail")
             }
         })?.catch((e) => {
             //login failed
@@ -56,19 +62,27 @@ export default function App() {
     return (
 
         <Wraper>
-            <form onSubmit={handleSubmit(onSubmit)}>
 
-                <input type="text" placeholder="email id"{...register("email")} />
+            <Box className="logInForm" style={{backgroundColor:"yellow",border:"1px solid black",width:"300px",height:"100px",margin:"auto"}}>
 
-                <input type="text" placeholder="password"{...register("password")} />
+                <form onSubmit={handleSubmit(onSubmit)} style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+
+                    <input type="text" placeholder="email id"{...register("email")}
+                    style={{margin:"8px",padding:"8px,",border:"1px solid black",}} />
+
+                    <input type="text" placeholder="password"{...register("password")} 
+                     style={{margin:"8px",padding:"8px,",border:"1px solid black",}} />
+
+                    <input type="submit" />
+                </form>
+
+            </Box>
 
 
-                {/* <input {...register("exampleRequired", { required: true })} />
+            {/* <input {...register("exampleRequired", { required: true })} />
             {errors.exampleRequired && <span>This field is required</span>} */}
 
 
-                <input type="submit" />
-            </form>
         </Wraper>
     )
 }

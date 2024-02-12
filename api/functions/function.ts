@@ -23,18 +23,13 @@ export const LogData = async (data: {
 
 /// 
 
-export const FetchBranchData = async (data:{
-    
-    page:number,
-    length:number,
-    search:string,
-    sortby:string,
-    sortOrder:string
+export const FetchBranchData = async () => {
+    const res = await axiosInstance.post(endpoint.Fetch.Branch,{
+        page:1,
+        length:10,
+    })?.then((r)=> r.data)
 
-
-}) => {
-    const res = await axiosInstance.post(endpoint.Fetch.Branch,data)
-    return res
+    return res?.data.docs
 
 }
 

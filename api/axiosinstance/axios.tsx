@@ -30,7 +30,9 @@ axiosInstance.interceptors.request.use((config)=>{
     if(token && !! config.headers){
         config.headers["Authorization"]=`${token}`
     }
+    //console.log(config)
     return config;
+    
 })
 
 export default axiosInstance
